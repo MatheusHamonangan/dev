@@ -1,0 +1,23 @@
+From 1b8b5f98d2a6b00d46d6013b143aeaea9feb6ebb Mon Sep 17 00:00:00 2001
+From: MatheusHamonangan <matheusgultom@192.168.1.7>
+Date: 14/07/2014 1:28:28 AM
+
+MDL-46344: Use the get string class to output the string to the page.
+
+diff --git a/lib/outputrenderers.php b/lib/outputrenderers.php
+index 9ef6a78..dc8e1ae 100644
+--- a/lib/outputrenderers.php
++++ b/lib/outputrenderers.php
+@@ -510,8 +510,11 @@
+         // Get links to switch device types (only shown for users not on a default device)
+         $output .= $this->theme_switch_links();
+ 
++        // MDL-46344, render string using the get_string class.
++        $thispage = get_string('thispageis', 'admin');
++        
+         if (!empty($CFG->debugpageinfo)) {
+-            $output .= '<div class="performanceinfo pageinfo">This page is: ' . $this->page->debug_summary() . '</div>';
++            $output .= '<div class="performanceinfo pageinfo">'. $thispage . ': ' .  $this->page->debug_summary() . '</div>';
+         }
+         if (debugging(null, DEBUG_DEVELOPER) and has_capability('moodle/site:config', context_system::instance())) {  // Only in developer mode
+             // Add link to profiling report if necessary
